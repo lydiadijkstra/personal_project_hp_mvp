@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 # import
-from app.core.dependencies import get_db, oauth2_scheme 
+from app.core.dependencies import get_db, oauth2_scheme
 from app.schemas.user import User, UserCreate, UserUpdate
 from app.api.endpoints.user import functions as user_functions
 

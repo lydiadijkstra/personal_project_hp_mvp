@@ -31,12 +31,12 @@ async def login_for_access_token(
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = user_functions.create_access_token(
-        data={"id": member.id, "email": member.email, "role": member.role}, expires_delta=access_token_expires
+        data={"user_id": member.user_id, "email": member.email, "role": member.role}, expires_delta=access_token_expires
     )
 
     refresh_token_expires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     refresh_token = await user_functions.create_refresh_token(
-        data={"id": member.id, "email": member.email, "role": member.role}, 
+        data={"user_id": member.user_id, "email": member.email, "role": member.role},
         expires_delta=refresh_token_expires
     )
     return Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")
@@ -46,7 +46,7 @@ async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)
     token = await user_functions.refresh_access_token(db, refresh_token)
     return token
 
-# get curren user 
+# get current user
 @auth_module.get('/users/me/', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
     return current_user

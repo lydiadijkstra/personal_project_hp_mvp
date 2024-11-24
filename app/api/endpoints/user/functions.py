@@ -23,7 +23,7 @@ def get_user_by_email(db: Session, email: str):
 
 # get user by id
 def get_user_by_id(db: Session, user_id: int):
-    db_user = db.query(UserModel.User).filter(UserModel.User.id == user_id).first()
+    db_user = db.query(UserModel.User).filter(UserModel.User.user_id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
@@ -31,7 +31,7 @@ def get_user_by_id(db: Session, user_id: int):
 # crete new user 
 def create_new_user(db: Session, user: UserCreate):
     hashed_password = pwd_context.hash(user.password)
-    new_user = UserModel.User(email=user.email, password=hashed_password, first_name=user.first_name, last_name=user.last_name)
+    new_user = UserModel.User(user_name=user.user_name, location=user.location, email=user.email, password=hashed_password, name=user.name, role=user.role if user.role else 'user')  # Default to 'user' if not provided)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -96,7 +96,7 @@ async def create_refresh_token(data: dict, expires_delta: timedelta | None = Non
 async def refresh_access_token(db: Session, refresh_token: str):
     try:
         payload = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: str = payload.get("id")
+        user_id: str = payload.get("user_id")
         if user_id is None:
             raise HTTPException(status_code=401, detail="Invalid refresh token")
         # member = await User.get(user_id)
@@ -105,7 +105,7 @@ async def refresh_access_token(db: Session, refresh_token: str):
             raise HTTPException(status_code=401, detail="Invalid refresh token")
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token =  create_access_token(
-            data={"id": member.id, "email": member.email, "role": member.role},
+            data={"user_id": member.user_id, "email": member.email, "role": member.role},
             expires_delta=access_token_expires
         )
         return Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")

@@ -12,7 +12,27 @@ def create_app() -> FastAPI:
         middleware=make_middleware(),
     )
     init_routers(app_=app_)
+    #return app_
+
+
+    @app_.get("/")
+    def read_root():
+        return {"message": "Welcome to the API"}
+
     return app_
 
 
 app = create_app()
+
+
+"""
+install requirements, run command in terminal:
+pip install -r requirements.txt
+
+# or for updated version
+pip install -r dev.txt
+
+command to run the app:
+uvicorn app.main:app --reload
+
+"""
