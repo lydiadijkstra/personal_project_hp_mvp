@@ -28,9 +28,10 @@ class User(UserBase):
 		from_attributes = True
 
 class UserUpdate(BaseModel):
-	# first_name: str | None = None
-	# last_name: str | None = None
-	#is_active: bool | None = None
+	user_name: Optional[str]
+	password: Optional[str]
+	name: Optional[str]
+	location: Optional[str]
 	role: UserRole or None = None
 
 class Token(BaseModel):
