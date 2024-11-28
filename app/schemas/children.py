@@ -4,11 +4,12 @@ from typing import Optional
 
 class ChildBase(BaseModel):
     difficulty: str
-    name: Optional[str]
+    name: str
     birth_date: Optional[date]
 
 class ChildCreate(ChildBase):
-    pass #pass? or name + birthdate?
+    name: str
+    birth_date: date
 
 class Child(ChildBase):
     child_id: int

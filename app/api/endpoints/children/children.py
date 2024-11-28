@@ -58,5 +58,5 @@ async def update_child(child_id: int, child: ChildUpdate, db: Session = Depends(
             #    response_model=Child,
             #    dependencies=[Depends(RoleChecker(['admin']))]
                )
-async def delete_child( child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user())):
+async def delete_child( child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.delete_child(db, child_id, current_user)

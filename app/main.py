@@ -1,24 +1,25 @@
 # fastapi
 from fastapi import FastAPI
 from app.core.modules import init_routers, make_middleware
+from app.api.routers.children import child_router
 
 
 def create_app() -> FastAPI:
     app_ = FastAPI(
-        title="FastAPI starter kit",
-        description="FastAPI starter kit that is needed for every fastapi project. The repo is developed with 💗 by mahmud.",
+        title="HarmonicParent",
+        description="Parenting API for supporting parents in times where bringing up gets hard. Created with a fork of the FastAPI starter kit repo, developed with 💗 by mahmud.",
         version="1.0.0",
         # dependencies=[Depends(Logging)],
         middleware=make_middleware(),
     )
     init_routers(app_=app_)
-    #return app_
+    app_.include_router(child_router)
 
-
+    """
     @app_.get("/")
     def read_root():
         return {"message": "Welcome to the API"}
-
+    """
     return app_
 
 
