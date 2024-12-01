@@ -1,32 +1,28 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime, date
 from typing import Optional
+
 
 class ChildBase(BaseModel):
     difficulty: str
     name: str
-    birth_date: Optional[date]
+    birth_date: date
+
 
 class ChildCreate(ChildBase):
-    name: str
-    birth_date: date
+    pass
+
 
 class Child(ChildBase):
-    child_id: int
-    user_id: int
-    name: Optional[str]
-    birth_date: date
-    created_at: datetime
+    child_id: int = Field(..., description="Unique ID for the child")
+    user_id: int = Field(..., description="ID of the user who created the child")
+    created_at: datetime = Field(..., description="Timestamp when the child record was created")
 
     class Config:
-        from_attributes = True
+        orm_mode = True  # Ensure compatibility with SQLAlchemy models
+
 
 class ChildUpdate(BaseModel):
     name: Optional[str]
     difficulty: Optional[str]
     birth_date: Optional[date]
-
-class Token(BaseModel):
-    access_token: str
-    refresh_token: str
-    token_type: str

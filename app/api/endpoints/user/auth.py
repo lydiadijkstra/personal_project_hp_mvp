@@ -47,6 +47,6 @@ async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)
     return token
 
 # get current user
-@auth_module.get('/users/me/', response_model= User)
+@auth_module.get('/users/me', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
     return current_user

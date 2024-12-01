@@ -12,30 +12,22 @@ from jose import JWTError, jwt
 # import
 from app.models import user as UserModel
 from app.models import children as ChildModel
-from app.schemas.children import ChildCreate, ChildUpdate, Token
+from app.schemas.children import ChildCreate, ChildUpdate#, Token
 from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
 from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.dependencies import get_db, oauth2_scheme
 from app.api.endpoints.user.functions import get_current_user
 
 
+# Resolve forward references
+ChildCreate.model_rebuild()
+ChildUpdate.model_rebuild()
+
+
 #pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-"""
-# get user by email
-def get_child_by_name(db: Session, name: str):
-    return db.query(ChildModel.Child).filter(ChildModel.Child.name == name).first()
 
-
-# get user by id
-def get_child_by_id(db: Session, child_id: int):
-    db_child = db.query(ChildModel.User).filter(ChildModel.Child.child_id == child_id).first()
-    if db_child is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_child
-"""
-
-# crete new child
+# create new child
 def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     #hashed_password = pwd_context.hash(child.password)
     new_child = ChildModel.Child(

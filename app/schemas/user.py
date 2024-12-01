@@ -3,8 +3,10 @@ from datetime import datetime
 from typing import Optional
 from app.models.user import UserRole
 
+
 class UserBase(BaseModel):
 	email: str
+
 
 class UserCreate(UserBase):
 	password: str
@@ -13,8 +15,10 @@ class UserCreate(UserBase):
 	user_name: Optional[str]
 	location: Optional[str]
 
+
 class UserLogin(UserBase):
 	password: str
+
 
 class User(UserBase):
 	user_id: int
@@ -24,8 +28,10 @@ class User(UserBase):
 	location: Optional[str]
 	role: UserRole or None
 	created_at: datetime
+
 	class Config:
 		from_attributes = True
+
 
 class UserUpdate(BaseModel):
 	user_name: Optional[str]
@@ -34,10 +40,8 @@ class UserUpdate(BaseModel):
 	location: Optional[str]
 	role: UserRole or None = None
 
+
 class Token(BaseModel):
 	access_token: str
 	refresh_token: str
 	token_type: str
-
-
-

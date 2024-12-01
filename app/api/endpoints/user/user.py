@@ -16,6 +16,7 @@ user_module = APIRouter()
 # async def read_auth_page():
 #     return {"msg": "Auth page Initialization done"}
 
+
 # create new user 
 @user_module.post('/', response_model=User)
 async def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
@@ -25,6 +26,7 @@ async def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     new_user = user_functions.create_new_user(db, user)
     return new_user
 
+
 # get all user 
 @user_module.get('/', 
             response_model=list[User],
@@ -32,6 +34,7 @@ async def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
             )
 async def read_all_user( skip: int = 0, limit: int = 100,  db: Session = Depends(get_db)):
     return user_functions.read_all_user(db, skip, limit)
+
 
 # get user by id 
 @user_module.get('/{user_id}', 
@@ -50,6 +53,7 @@ async def update_user( user_id: int, user: UserUpdate, db: Session = Depends(get
     print(f"Received data: {user.model_dump()}")
     return user_functions.update_user(db, user_id, user)
 
+
 # delete user
 @user_module.delete('/{user_id}', 
             #    response_model=User,
@@ -57,5 +61,3 @@ async def update_user( user_id: int, user: UserUpdate, db: Session = Depends(get
                )
 async def delete_user( user_id: int, db: Session = Depends(get_db)):
     return user_functions.delete_user(db, user_id)
-
-

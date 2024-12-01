@@ -1,5 +1,3 @@
-from operator import index
-
 from sqlalchemy import Column, String, Enum, TIMESTAMP, Integer, Boolean
 from enum import Enum as PythonEnum
 from app.core.database import Base

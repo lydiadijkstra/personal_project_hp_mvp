@@ -6,7 +6,7 @@ child_router = APIRouter()
 
 child_router.include_router(
     child_module,
-    prefix="/children",
+    prefix="",
     tags=["children"],
-    responses={404: {"description": "Not found"}},
+    responses={404: {"description": "Not Found"}},
 )

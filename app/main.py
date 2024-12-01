@@ -1,7 +1,12 @@
 # fastapi
 from fastapi import FastAPI
+from fastapi.openapi.utils import get_openapi
+
 from app.core.modules import init_routers, make_middleware
 from app.api.routers.children import child_router
+from fastapi.openapi.docs import get_swagger_ui_html
+
+from app.api.endpoints.user.functions import get_current_user
 
 
 def create_app() -> FastAPI:
@@ -11,15 +16,11 @@ def create_app() -> FastAPI:
         version="1.0.0",
         # dependencies=[Depends(Logging)],
         middleware=make_middleware(),
+        root_path="/" # <------ This root_path fix the problem,
+
     )
     init_routers(app_=app_)
-    app_.include_router(child_router)
 
-    """
-    @app_.get("/")
-    def read_root():
-        return {"message": "Welcome to the API"}
-    """
     return app_
 
 
