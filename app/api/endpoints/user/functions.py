@@ -17,16 +17,20 @@ from app.core.dependencies import get_db, oauth2_scheme
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
 # get user by email 
 def get_user_by_email(db: Session, email: str):
-    return db.query(UserModel.User).filter(UserModel.User.email == email).first()
+    db_user = db.query(UserModel.User).filter(UserModel.User.email == email).first()
+    return db_user
+
 
 # get user by id
 def get_user_by_id(db: Session, user_id: int):
     db_user = db.query(UserModel.User).filter(UserModel.User.user_id == user_id).first()
     if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="User id not found")
     return db_user
+
 
 # crete new user 
 def create_new_user(db: Session, user: UserCreate):
@@ -42,7 +46,11 @@ def create_new_user(db: Session, user: UserCreate):
 def read_all_user(db: Session, skip: int, limit: int):
     return db.query(UserModel.User).offset(skip).limit(limit).all()
 
+
 # update user
+## the newly created password is not being hashed, login with updated password does not work
+## option 1 check for password being changed, when yes, hash password.
+## option 2 remove change password from update funktion and create a single function for it
 def update_user(db: Session, user_id: int, user: UserUpdate):
     db_user = get_user_by_id(db, user_id)
     updated_data = user.model_dump(exclude_unset=True) # partial update
@@ -53,6 +61,7 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
     db.refresh(db_user)
     return db_user
 
+
 # delete user
 def delete_user(db: Session, user_id: int):
     db_user = get_user_by_id(db, user_id)
@@ -61,9 +70,11 @@ def delete_user(db: Session, user_id: int):
     # db.refresh(db_user)
     return {"msg": f"{db_user.email} deleted successfully"}
 
+
 # =====================> login/logout <============================
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
 
 def authenticate_user(db: Session, user: UserCreate):
     member = get_user_by_email(db, user.email)
@@ -72,6 +83,7 @@ def authenticate_user(db: Session, user: UserCreate):
     if not verify_password(user.password, member.password):
         return False
     return member
+
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
@@ -83,6 +95,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+
 async def create_refresh_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     if expires_delta:
@@ -92,6 +105,7 @@ async def create_refresh_token(data: dict, expires_delta: timedelta | None = Non
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 async def refresh_access_token(db: Session, refresh_token: str):
     try:
@@ -111,7 +125,8 @@ async def refresh_access_token(db: Session, refresh_token: str):
         return Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
-    
+
+
 # get current users info 
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
     credentials_exception = HTTPException(
@@ -131,4 +146,3 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         return user
     except JWTError:
         raise credentials_exception
-

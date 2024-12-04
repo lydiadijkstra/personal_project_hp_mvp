@@ -41,12 +41,14 @@ async def login_for_access_token(
     )
     return Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")
 
+
 @auth_module.post("/refresh", response_model=Token)
 async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)):
     token = await user_functions.refresh_access_token(db, refresh_token)
     return token
 
+
 # get current user
-@auth_module.get('/users/me', response_model= User)
+@auth_module.get('/me', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
     return current_user

@@ -23,7 +23,7 @@ class UserLogin(UserBase):
 class User(UserBase):
 	user_id: int
 	user_name: Optional[str]
-	password: Optional[str]
+	password: Optional[str] # only for debugging etc, turn off when app gets deployed
 	name: Optional[str]
 	location: Optional[str]
 	role: UserRole or None

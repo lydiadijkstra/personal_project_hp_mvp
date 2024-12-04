@@ -42,6 +42,9 @@ async def create_new_child(
         birth_date=child.birth_date,
         user_id=current_user.user_id,
     )
+    # new_child = child_functions.create_new_child(db, child, current_user)
+    # call the code in functions or delete.
+
     db.add(new_child)
     db.commit()
     db.refresh(new_child)
@@ -71,7 +74,7 @@ async def read_all_children(skip: int = 0, limit: int = 100,  db: Session = Depe
 @child_module.get('/{child_id}', response_model=Child,
             # dependencies=[Depends(RoleChecker(['admin']))]
             )
-async def read_user_by_id(child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+async def read_child_by_id(child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.get_child_by_id(db, child_id, current_user)
 
 

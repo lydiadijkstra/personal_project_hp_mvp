@@ -26,6 +26,10 @@ def create_app() -> FastAPI:
 
 app = create_app()
 
+# print for debugging the create user bug
+# for route in app.routes:
+#     print(route.name, route.path, route.methods)
+
 
 """
 install requirements, run command in terminal:

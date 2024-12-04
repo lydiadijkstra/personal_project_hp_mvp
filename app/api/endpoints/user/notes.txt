@@ -1,0 +1,5 @@
+def login_for_access_token # function for login
+requires: (
+    user: UserLogin,
+    db: Session = Depends(get_db)
+return: Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")

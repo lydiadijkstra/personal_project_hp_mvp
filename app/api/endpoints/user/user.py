@@ -1,4 +1,6 @@
-# fastapi 
+# fastapi
+from venv import create
+
 from fastapi import APIRouter, Depends, HTTPException
 
 # sqlalchemy
@@ -43,6 +45,18 @@ async def read_all_user( skip: int = 0, limit: int = 100,  db: Session = Depends
             )
 async def read_user_by_id( user_id: int, db: Session = Depends(get_db)):
     return user_functions.get_user_by_id(db, user_id)
+
+
+# maybe change the endpoint into a search for id == id and email == email ??
+
+# get user by email
+@user_module.get('/email/{email}',
+            response_model=User,
+            # dependencies=[Depends(RoleChecker(['admin']))]
+            )
+async def read_user_by_email( email: str, db: Session = Depends(get_db)):
+    return user_functions.get_user_by_email(db, email)
+
 
 # update user
 @user_module.patch('/{user_id}', 

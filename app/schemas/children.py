@@ -19,7 +19,7 @@ class Child(ChildBase):
     created_at: datetime = Field(..., description="Timestamp when the child record was created")
 
     class Config:
-        orm_mode = True  # Ensure compatibility with SQLAlchemy models
+        from_attributes = True  # Ensure compatibility with SQLAlchemy models
 
 
 class ChildUpdate(BaseModel):
