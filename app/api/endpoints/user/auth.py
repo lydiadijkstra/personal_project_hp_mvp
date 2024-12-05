@@ -1,5 +1,5 @@
 # fastapi 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from typing import Annotated
 from datetime import timedelta
 
@@ -15,6 +15,21 @@ from app.api.endpoints.user import functions as user_functions
 
 auth_module = APIRouter()
 
+
+# @app.post("/token")
+# async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+#     user_dict = fake_users_db.get(form_data.username)
+#     if not user_dict:
+#         raise HTTPException(status_code=400, detail="Incorrect username or password")
+#     user = UserInDB(**user_dict)
+#     hashed_password = fake_hash_password(form_data.password)
+#     print(hashed_password)
+#     print(user.hashed_password)
+#     if hashed_password != user.hashed_password:
+#         raise HTTPException(status_code=400, detail="Incorrect username or password")
+#     return {"access_token": user.username, "token_type": "bearer"}
+
+
 # ============> login/logout < ======================
 # getting access token for login 
 @auth_module.post("/login", response_model= Token)
@@ -23,6 +38,7 @@ async def login_for_access_token(
     db: Session = Depends(get_db)
 ) -> Token:
     member = user_functions.authenticate_user(db, user=user)
+    print(member)
     if not member:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -48,7 +64,22 @@ async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)
     return token
 
 
+
+"""
+@app.get("/users/me")
+async def read_users_me(
+        current_user: Annotated[User, Depends(get_current_active_user)],
+):
+    return current_user
+"""
 # get current user
 @auth_module.get('/me', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
     return current_user
+
+
+# Temporarily create a route to inspect the headers
+@auth_module.get("/debug")
+async def debug_headers(request: Request):
+    return await user_functions.debug_request(request)
+

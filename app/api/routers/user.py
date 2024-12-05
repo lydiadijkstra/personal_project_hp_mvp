@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from app.api.endpoints.user.user import user_module
-from app.api.endpoints.user.auth import auth_module
-
+from app.api.endpoints.user.auth import auth_module, login_for_access_token
 
 user_router = APIRouter()
 child_router = APIRouter()
@@ -16,7 +15,16 @@ user_router.include_router(
 
 user_router.include_router(
     auth_module,
-    prefix="",
-    tags=["auth"],
+    prefix="/auth",
+    tags=["auth"], # auth/login
     responses={404: {"description": "Not found > app-api-routers-children.py - 2"}},
 )
+
+
+
+"""
+in the login endpoint it says:
+localhost/login
+localhost/auth/login
+
+"""

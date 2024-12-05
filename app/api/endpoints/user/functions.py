@@ -1,4 +1,6 @@
 from fastapi import HTTPException, status, Depends
+from fastapi import Request
+
 from typing import Annotated
 from datetime import datetime, timedelta, timezone
 
@@ -51,6 +53,7 @@ def read_all_user(db: Session, skip: int, limit: int):
 ## the newly created password is not being hashed, login with updated password does not work
 ## option 1 check for password being changed, when yes, hash password.
 ## option 2 remove change password from update funktion and create a single function for it
+## after hashing the new password, the new password should be entered at auth
 def update_user(db: Session, user_id: int, user: UserUpdate):
     db_user = get_user_by_id(db, user_id)
     updated_data = user.model_dump(exclude_unset=True) # partial update
@@ -127,6 +130,15 @@ async def refresh_access_token(db: Session, refresh_token: str):
         raise HTTPException(status_code=401, detail="Invalid refresh token")
 
 
+# adding for testing login
+async def debug_request(request: Request):
+    print(request.headers)
+    return {"headers": dict(request.headers)}
+
+
+
+
+
 # get current users info 
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
     credentials_exception = HTTPException(
@@ -134,9 +146,11 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         detail="Invalid authentication credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    print(token)
+    print("enter functions-get_current_user")
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        # print(f"Payload =====> {payload}")
+        #print(f"Payload =====> {payload}")
         current_email: str = payload.get("email")
         if current_email is None:
             raise credentials_exception
@@ -146,3 +160,14 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         return user
     except JWTError:
         raise credentials_exception
+"""
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    user = decode_token(token)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user
+"""
