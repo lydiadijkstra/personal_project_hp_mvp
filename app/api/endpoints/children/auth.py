@@ -15,6 +15,11 @@ from app.api.endpoints.user import functions as user_functions
 
 #auth_module = APIRouter()
 
+
+## This file is unnecessary, the children dont have their own auth, they auth by current_user
+
+
+
 """
 # ============> login/logout < ======================
 # getting access token for login

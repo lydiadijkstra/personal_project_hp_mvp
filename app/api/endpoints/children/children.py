@@ -78,6 +78,14 @@ async def read_child_by_id(child_id: int, db: Session = Depends(get_db), current
     return child_functions.get_child_by_id(db, child_id, current_user)
 
 
+# get child by name
+@child_module.get('/name/{name}', response_model=Child,
+            # dependencies=[Depends(RoleChecker(['admin']))]
+            )
+async def read_child_by_name(name: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    return child_functions.get_child_by_name(db, name, current_user)
+
+
 # update user
 @child_module.patch('/{child_id}', response_model=Child,
             #   dependencies=[Depends(RoleChecker(['admin']))]

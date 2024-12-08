@@ -47,8 +47,6 @@ async def read_user_by_id( user_id: int, db: Session = Depends(get_db)):
     return user_functions.get_user_by_id(db, user_id)
 
 
-# maybe change the endpoint into a search for id == id and email == email ??
-
 # get user by email
 @user_module.get('/email/{email}',
             response_model=User,

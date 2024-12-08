@@ -49,8 +49,8 @@ def read_all_children(db: Session, current_user: Annotated[UserModel.User, Depen
 # Get a specific child by ID, ensuring it belongs to the logged-in user
 def get_child_by_id(db: Session, child_id: int, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     db_child = db.query(ChildModel.Child).filter(
-        ChildModel.Child.id == child_id,
-        ChildModel.Child.user_id == current_user.user_id,  # Ensure the child belongs to the user
+        ChildModel.Child.child_id == child_id,
+        ChildModel.Child.user_id == current_user.user_id,  # Ensures the child belongs to the user
     ).first()
     if db_child is None:
         raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
@@ -85,6 +85,6 @@ def delete_child(db: Session, child_id: int, current_user: Annotated[UserModel.U
     db_child = get_child_by_id(db, child_id, current_user)
     db.delete(db_child)
     db.commit()
-    db.refresh(db_child)
+    # db.refresh(db_child) # child no longer in the database, so refresh the child is not possible -> internal server error
     return {"msg": f"{db_child.name} deleted successfully"}
 
