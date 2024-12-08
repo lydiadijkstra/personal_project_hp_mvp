@@ -13,8 +13,9 @@ from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_
 from app.api.endpoints.user import functions as user_functions
 
 
-auth_module = APIRouter()
+#auth_module = APIRouter()
 
+"""
 # ============> login/logout < ======================
 # getting access token for login
 @auth_module.post("/login", response_model= Token)
@@ -50,3 +51,4 @@ async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)
 @auth_module.get('/users/me', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
     return current_user
+"""
