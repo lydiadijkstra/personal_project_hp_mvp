@@ -57,6 +57,9 @@ def read_all_user(db: Session, skip: int, limit: int):
 def update_user(db: Session, user_id: int, user: UserUpdate):
     db_user = get_user_by_id(db, user_id)
     updated_data = user.model_dump(exclude_unset=True) # partial update
+    if "password" in updated_data:
+        hashed_password = pwd_context.hash(updated_data["password"])
+        updated_data["password"] = hashed_password
     for key, value in updated_data.items():
         setattr(db_user, key, value)
     db.add(db_user)
