@@ -86,7 +86,7 @@ async def read_child_by_name(name: str, db: Session = Depends(get_db), current_u
     return child_functions.get_child_by_name(db, name, current_user)
 
 
-# update user
+# update child
 @child_module.patch('/{child_id}', response_model=Child,
             #   dependencies=[Depends(RoleChecker(['admin']))]
               )
@@ -95,7 +95,7 @@ async def update_child(child_id: int, child: ChildUpdate, db: Session = Depends(
     return child_functions.update_child(db, child_id, child, current_user)
 
 
-# delete user
+# delete child
 @child_module.delete('/{child_id}',
             #    response_model=Child,
             #    dependencies=[Depends(RoleChecker(['admin']))]

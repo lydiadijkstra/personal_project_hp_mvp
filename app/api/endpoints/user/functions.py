@@ -16,8 +16,34 @@ from app.schemas.user import UserCreate, UserUpdate, Token
 from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
 from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.dependencies import get_db, oauth2_scheme
+#from app.api.endpoints.user.functions import get_current_user
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+
+# get current users info
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid authentication credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    print(token)
+    print("enter functions-get_current_user")
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        #print(f"Payload =====> {payload}")
+        current_email: str = payload.get("email")
+        if current_email is None:
+            raise credentials_exception
+        user = get_user_by_email(db, current_email)
+        if user is None:
+            raise credentials_exception
+        return user
+    except JWTError:
+        raise credentials_exception
 
 
 # get user by email 
@@ -50,12 +76,13 @@ def read_all_user(db: Session, skip: int, limit: int):
 
 
 # update user
-## the newly created password is not being hashed, login with updated password does not work
-## option 1 check for password being changed, when yes, hash password.
-## option 2 remove change password from update funktion and create a single function for it
-## after hashing the new password, the new password should be entered at auth
-def update_user(db: Session, user_id: int, user: UserUpdate):
+## maybe add endpoint /change_password for changing password when not logged in
+def update_user(db: Session, user_id: int, user: UserUpdate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     db_user = get_user_by_id(db, user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if db_user and db_user.user_id != current_user.user_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
     updated_data = user.model_dump(exclude_unset=True) # partial update
     if "password" in updated_data:
         hashed_password = pwd_context.hash(updated_data["password"])
@@ -138,10 +165,7 @@ async def debug_request(request: Request):
     print(request.headers)
     return {"headers": dict(request.headers)}
 
-
-
-
-
+"""
 # get current users info 
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
     credentials_exception = HTTPException(
@@ -163,6 +187,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         return user
     except JWTError:
         raise credentials_exception
+"""
 """
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = decode_token(token)
