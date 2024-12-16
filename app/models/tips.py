@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from app.core.database import Base
 
 
-class Tips(Base):
+class Tip(Base):
     __tablename__ = "tips"
 
     tip_id = Column(Integer, primary_key=True, index=True)
