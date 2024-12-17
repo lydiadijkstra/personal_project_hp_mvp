@@ -16,7 +16,7 @@ def create_app() -> FastAPI:
         version="1.0.0",
         # dependencies=[Depends(Logging)],
         middleware=make_middleware(),
-        root_path="/" # <------ This root_path fix the problem,
+        #root_path="/" # <------ This root_path fix the problem / 17.12 commenting out fixed 404 not found on all endpoints
 
     )
     init_routers(app_=app_)
@@ -25,10 +25,6 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-
-# print for debugging the create user bug
-# for route in app.routes:
-#     print(route.name, route.path, route.methods)
 
 
 """

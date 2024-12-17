@@ -12,7 +12,7 @@ from jose import JWTError, jwt
 # import
 from app.models import user as UserModel
 from app.models import tips as TipModel
-from app.schemas.tips import TipCreate, TipUpdate#, Token
+#from app.schemas.tips import TipCreate, TipUpdate#, Token
 from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
 from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.dependencies import get_db, oauth2_scheme
@@ -20,13 +20,13 @@ from app.api.endpoints.user.functions import get_current_user
 
 
 # Resolve forward references
-TipCreate.model_rebuild()
-TipUpdate.model_rebuild()
+# TipCreate.model_rebuild()
+# TipUpdate.model_rebuild()
 
 
 #pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
+"""
 # create new tip
 def create_new_tip(db: Session, tip: TipCreate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     new_tip = TipModel.Tip(
@@ -38,7 +38,7 @@ def create_new_tip(db: Session, tip: TipCreate, current_user: Annotated[UserMode
     db.commit()
     db.refresh(new_tip)
     return new_tip
-
+"""
 """
     tip_id = Column(Integer, primary_key=True, index=True)
     content = Column(String, nullable=False)
@@ -62,7 +62,7 @@ def get_tip_by_id(db: Session, tip_id: int, current_user: Annotated[UserModel.Us
         raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
     return db_tip
 
-
+"""
 # Get a specific tip by content, ensuring it belongs to the logged-in user
 def get_tip_by_content(db: Session, content: str, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     db_tip = db.query(TipModel.Tip).filter(
@@ -94,3 +94,4 @@ def delete_tip(db: Session, tip_id: int, current_user: Annotated[UserModel.User,
     # db.refresh(db_child) # child no longer in the database, so refresh the child is not possible -> internal server error
     return {"msg": f"{db_tip.content} deleted successfully"}
 
+"""
