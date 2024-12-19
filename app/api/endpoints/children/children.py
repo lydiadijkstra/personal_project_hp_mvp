@@ -14,6 +14,8 @@ from app.api.endpoints.children import functions as child_functions
 from app.api.endpoints.user.functions import get_current_user
 from app.api.endpoints.children.functions import (create_new_child, read_all_children, update_child, delete_child)
 from app.schemas.user import User
+from app.models.tips import Tip
+from app.core.gemini_api_datafetcher import get_ai_tip
 
 
 child_module = APIRouter()
@@ -42,27 +44,13 @@ async def create_new_child(
         birth_date=child.birth_date,
         user_id=current_user.user_id,
     )
-    # new_child = child_functions.create_new_child(db, child, current_user)
-    # call the code in functions or delete.
 
     db.add(new_child)
     db.commit()
     db.refresh(new_child)
+
     return new_child
 
-
-"""
->>> This is the buggy create child function, after creating the new one above, the docs are working. <<<
-
-# create new child
-@child_module.post('/', response_model=Child)
-async def create_new_child(child: ChildCreate, db: Session = Depends(get_db), current_user=Depends(current_user),):
-    db_child = child_functions.get_child_by_name(db, child.name, current_user)
-    if db_child:
-        raise HTTPException(status_code=400, detail="User already exists")
-    new_child = child_functions.create_new_child(db, child, current_user)
-    return new_child
-"""
 
 # get all children
 @child_module.get('/', response_model=list[Child])
@@ -102,3 +90,12 @@ async def update_child(child_id: int, child: ChildUpdate, db: Session = Depends(
                )
 async def delete_child( child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.delete_child(db, child_id, current_user)
+
+"""
+@child_module.get("/children/{child_id}/tips", response_model=List[TipResponse])
+def get_tips_for_child(child_id: int, db: Session = Depends(get_db), current_user: int = Depends(get_current_user)):
+    tips = db.query(Tip).filter(Tip.child_id == child_id, Tip.user_id == current_user.id).all()
+    if not tips:
+        raise HTTPException(status_code=404, detail="No tips found for this child")
+    return tips
+"""

@@ -30,11 +30,10 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         detail="Invalid authentication credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    print(token)
-    print("enter functions-get_current_user")
+    print("Running get_current_user", flush=True)
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        #print(f"Payload =====> {payload}")
         current_email: str = payload.get("email")
         if current_email is None:
             raise credentials_exception

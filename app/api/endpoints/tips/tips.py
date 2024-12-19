@@ -25,8 +25,9 @@ from sqlalchemy.sql.functions import current_user
 
 # import
 from app.core.dependencies import get_db, oauth2_scheme
-from app.schemas.tips import Tip
+from app.schemas.tips import Tip, TipCreate
 from app.models.tips import Tip as TipModel
+from app.models.children import Child as ChildModel
 from app.api.endpoints.tips import functions as tip_functions
 from app.api.endpoints.user.functions import get_current_user
 from app.api.endpoints.children.functions import (create_new_child, read_all_children, update_child, delete_child)
@@ -48,3 +49,26 @@ async def read_all_tips(skip: int = 0, limit: int = 100,  db: Session = Depends(
             )
 async def read_tip_by_id(tip_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return tip_functions.get_tip_by_id(db, tip_id, current_user)
+
+
+#create tip
+@tip_module.post('/create/{child_id}', response_model=Tip)
+async def create_tip_endpoint(
+    child_id: int,
+    tip: TipCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # # Create the new tip record
+    # new_tip = TipModel(
+    #     content=tip.content,
+    #     problem_type=ChildModel.difficulty,
+    #     user_id=current_user.user_id,
+    #     child_id=current_user.child_id
+    # )
+    #
+    # db.add(new_tip)
+    # db.commit()
+    # db.refresh(new_tip)
+
+    return tip_functions.create_new_tip(db, tip, current_user, child_id)

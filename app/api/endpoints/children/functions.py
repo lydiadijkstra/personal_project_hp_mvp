@@ -17,6 +17,12 @@ from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
 from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.dependencies import get_db, oauth2_scheme
 from app.api.endpoints.user.functions import get_current_user
+from app.core.gemini_api_datafetcher import get_ai_tip
+from app.models.tips import Tip
+
+#add logging for debugging the problem not getting a print and not creating a tip
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 # Resolve forward references
@@ -35,10 +41,47 @@ def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[Us
         age=child.age,
         user_id=current_user.user_id
     )
+    #print("new child creation starts here")
+    #logging.debug("i will create a new child now ! / children_functions")
+
+    #add try except for debugging the print problem
+    try:
+        logging.debug("I will create a new child now! / children_functions")
+        ...
+    except Exception as e:
+        logging.debug(f"Error occurred: {e}")
+        raise
+
     db.add(new_child)
     db.commit()
     db.refresh(new_child)
+
     return new_child
+"""
+    logging.debug("this is the point where the child is created and creating the tip starts")
+    # Create first tip for the issue the parent has
+    logging.debug(f"Child difficulty: {child.difficulty}")
+    try:
+        tip_content = get_ai_tip(problem_type=child.difficulty)
+        logging.debug("successfully created child and entered the try get ai tip / children functions")
+    except Exception as e:
+        logging.debug("Sorry yu could not leave the create child to go to generate tip / children functions")
+
+        raise HTTPException(status_code=500, detail="Error generating tip")
+
+        # Store the tip in the database
+    new_tip = Tip(
+        user_id=current_user.id,
+        child_id=new_child.id,
+        problem=child.difficulty,
+        tip_content=tip_content
+    )
+    logging.debug(tip_content)
+    db.add(new_tip)
+    db.commit()
+    db.refresh(new_tip)
+"""
+
 
 
 # get all children

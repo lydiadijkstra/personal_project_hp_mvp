@@ -6,7 +6,7 @@ tip_router = APIRouter()
 
 tip_router.include_router(
     tip_module,
-    prefix="/tip",
-    tags=["tip"],
+    prefix="/tips",
+    tags=["tips"],
     responses={404: {"description": "Not Found"}},
 )
