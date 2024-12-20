@@ -15,7 +15,6 @@ def get_ai_tip(problem_type: str):
     Randomly picks a query from the list with different queries, which have the theme of the problem_type.
     return: new tip
     """
-    print("I am in the datafetcher to create an ai-tip", flush=True)
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel(
       model_name="gemini-1.5-flash",
@@ -35,8 +34,6 @@ def get_ai_tip(problem_type: str):
       model.generate_content(f"Give me an example of what to say to my child, when I have following difficulty with my child: {problem_type}")]
 
     new_tip = choice(list_with_diff_queries)
-    print("new tip was created / gemini_api_datafetcher", flush=True)
-    print(new_tip.text)
     return new_tip.text
 
 #print(get_ai_tip("hitting people"))

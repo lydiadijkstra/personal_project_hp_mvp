@@ -30,9 +30,6 @@ ChildCreate.model_rebuild()
 ChildUpdate.model_rebuild()
 
 
-#pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
 # create new child
 def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     #hashed_password = pwd_context.hash(child.password)
@@ -41,10 +38,6 @@ def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[Us
         age=child.age,
         user_id=current_user.user_id
     )
-    #print("new child creation starts here")
-    #logging.debug("i will create a new child now ! / children_functions")
-
-    #add try except for debugging the print problem
     try:
         logging.debug("I will create a new child now! / children_functions")
         ...
@@ -55,33 +48,7 @@ def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[Us
     db.add(new_child)
     db.commit()
     db.refresh(new_child)
-
     return new_child
-"""
-    logging.debug("this is the point where the child is created and creating the tip starts")
-    # Create first tip for the issue the parent has
-    logging.debug(f"Child difficulty: {child.difficulty}")
-    try:
-        tip_content = get_ai_tip(problem_type=child.difficulty)
-        logging.debug("successfully created child and entered the try get ai tip / children functions")
-    except Exception as e:
-        logging.debug("Sorry yu could not leave the create child to go to generate tip / children functions")
-
-        raise HTTPException(status_code=500, detail="Error generating tip")
-
-        # Store the tip in the database
-    new_tip = Tip(
-        user_id=current_user.id,
-        child_id=new_child.id,
-        problem=child.difficulty,
-        tip_content=tip_content
-    )
-    logging.debug(tip_content)
-    db.add(new_tip)
-    db.commit()
-    db.refresh(new_tip)
-"""
-
 
 
 # get all children

@@ -22,7 +22,6 @@ from app.core.dependencies import get_db, oauth2_scheme
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-
 # get current users info
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
     credentials_exception = HTTPException(
@@ -30,8 +29,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotate
         detail="Invalid authentication credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    print("Running get_current_user", flush=True)
-
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         current_email: str = payload.get("email")
@@ -163,38 +160,3 @@ async def refresh_access_token(db: Session, refresh_token: str):
 async def debug_request(request: Request):
     print(request.headers)
     return {"headers": dict(request.headers)}
-
-"""
-# get current users info 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid authentication credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    print(token)
-    print("enter functions-get_current_user")
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        #print(f"Payload =====> {payload}")
-        current_email: str = payload.get("email")
-        if current_email is None:
-            raise credentials_exception
-        user = get_user_by_email(db, current_email)
-        if user is None:
-            raise credentials_exception
-        return user
-    except JWTError:
-        raise credentials_exception
-"""
-"""
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    user = decode_token(token)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    return user
-"""

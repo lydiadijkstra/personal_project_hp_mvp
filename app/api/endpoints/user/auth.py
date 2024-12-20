@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request
 from typing import Annotated
 from datetime import timedelta
 
+from fastapi.security import OAuth2PasswordRequestForm
 # sqlalchemy
 from sqlalchemy.orm import Session
 
@@ -16,27 +17,12 @@ from app.api.endpoints.user import functions as user_functions
 auth_module = APIRouter()
 
 
-# @app.post("/token")
-# async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-#     user_dict = fake_users_db.get(form_data.username)
-#     if not user_dict:
-#         raise HTTPException(status_code=400, detail="Incorrect username or password")
-#     user = UserInDB(**user_dict)
-#     hashed_password = fake_hash_password(form_data.password)
-#     print(hashed_password)
-#     print(user.hashed_password)
-#     if hashed_password != user.hashed_password:
-#         raise HTTPException(status_code=400, detail="Incorrect username or password")
-#     return {"access_token": user.username, "token_type": "bearer"}
-
-
-# ============> login/logout < ======================
-# getting access token for login 
 @auth_module.post("/login", response_model= Token)
 async def login_for_access_token(
-    user: UserLogin,
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Session = Depends(get_db)
 ) -> Token:
+    user = UserLogin(email=form_data.username, password=form_data.password)
     member = user_functions.authenticate_user(db, user=user)
     print(member)
     if not member:
@@ -57,21 +43,13 @@ async def login_for_access_token(
     )
     return Token(access_token=access_token, refresh_token=refresh_token, token_type="bearer")
 
-
+# refresh access token
 @auth_module.post("/refresh", response_model=Token)
 async def refresh_access_token(refresh_token: str, db: Session = Depends(get_db)):
     token = await user_functions.refresh_access_token(db, refresh_token)
     return token
 
 
-
-"""
-@app.get("/users/me")
-async def read_users_me(
-        current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return current_user
-"""
 # get current user
 @auth_module.get('/me', response_model= User)
 async def read_current_user( current_user: Annotated[User, Depends(user_functions.get_current_user)]):
@@ -82,4 +60,9 @@ async def read_current_user( current_user: Annotated[User, Depends(user_function
 @auth_module.get("/debug")
 async def debug_headers(request: Request):
     return await user_functions.debug_request(request)
+
+@auth_module.post("/debug-login")
+async def debug_login(user: UserLogin):
+    return user
+
 

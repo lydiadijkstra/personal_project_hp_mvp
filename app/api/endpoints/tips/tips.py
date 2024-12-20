@@ -59,16 +59,4 @@ async def create_tip_endpoint(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # # Create the new tip record
-    # new_tip = TipModel(
-    #     content=tip.content,
-    #     problem_type=ChildModel.difficulty,
-    #     user_id=current_user.user_id,
-    #     child_id=current_user.child_id
-    # )
-    #
-    # db.add(new_tip)
-    # db.commit()
-    # db.refresh(new_tip)
-
     return tip_functions.create_new_tip(db, tip, current_user, child_id)

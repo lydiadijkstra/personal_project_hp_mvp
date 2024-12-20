@@ -20,20 +20,20 @@ TipCreate.model_rebuild()
 
 # create new tip
 def create_new_tip(db: Session, tip: TipCreate, current_user: UserModel.User, child_id: int):
-
     try:
-        tip_content = get_ai_tip(problem_type=tip.problem_type)
+        # Validate that the child exists for the current user
+        child = db.query(ChildModel).filter(
+            ChildModel.child_id == child_id,
+            ChildModel.user_id == current_user.user_id
+        ).first()
+        if not child:
+            raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
+
+        problem_type = child.difficulty
+        tip_content = get_ai_tip(problem_type=problem_type)
     except Exception as e:
         print(f"Error generating tip: {e}")
         raise HTTPException(status_code=500, detail="Error generating tip")
-
-    # Validate that the child exists for the current user
-    child = db.query(ChildModel).filter(
-        ChildModel.child_id == child_id,
-        ChildModel.user_id == current_user.user_id
-    ).first()
-    if not child:
-        raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
 
     # create the new tip
     new_tip = TipModel(
@@ -52,15 +52,15 @@ def create_new_tip(db: Session, tip: TipCreate, current_user: UserModel.User, ch
 
 # get all tips
 def read_all_tips(db: Session, current_user: Annotated[UserModel.User, Depends(get_current_user)], skip: int = 0, limit: int = 10):
-    return db.query(TipModel.Tip).filter(TipModel.Tip.user_id == current_user.user_id).offset(skip).limit(limit).all()
+    return db.query(TipModel).filter(TipModel.user_id == current_user.user_id).offset(skip).limit(limit).all()
 
 
 # Get a specific tip by ID, ensuring it belongs to the logged-in user
 def get_tip_by_id(db: Session, tip_id: int, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
-    db_tip = db.query(TipModel.Tip).filter(
-        TipModel.Tip.tip_id == tip_id,
-        TipModel.Tip.user_id == current_user.user_id,  # Ensures the tip belongs to the user
+    db_tip = db.query(TipModel).filter(
+        TipModel.tip_id == tip_id,
+        TipModel.user_id == current_user.user_id,  # Ensures the tip belongs to the user
     ).first()
     if db_tip is None:
-        raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
+        raise HTTPException(status_code=404, detail="Tip not found or not authorized to access")
     return db_tip
