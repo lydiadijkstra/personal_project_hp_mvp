@@ -7,8 +7,9 @@ class Tip(Base):
 
     # Column definitions
     tip_id = Column(Integer, primary_key=True, index=True)  # Unique ID for each tip
-    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)  # ForeignKey to user
-    child_id = Column(Integer, ForeignKey('children.child_id'), nullable=False)  # ForeignKey to child
+    user_id = Column(Integer, ForeignKey('users.user_id', ondelete="CASCADE"), nullable=False)  # ForeignKey to user
+    child_id = Column(Integer, ForeignKey('children.child_id', ondelete="CASCADE"),
+                      nullable=False)  # ForeignKey to child with cascade delete
     content = Column(String, nullable=False)  # Content of the tip
     problem_type = Column(String, nullable=True)  # Type of problem the tip is addressing (optional)
     send_at = Column(TIMESTAMP, default=func.now(), nullable=False)  # Timestamp when the tip was sent/generated

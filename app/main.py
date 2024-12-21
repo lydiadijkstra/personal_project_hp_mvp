@@ -5,6 +5,7 @@ from fastapi.openapi.utils import get_openapi
 from app.core.modules import init_routers, make_middleware
 from app.api.routers.children import child_router
 from fastapi.openapi.docs import get_swagger_ui_html
+from app.core.database import initialize_database
 
 from app.api.endpoints.user.functions import get_current_user
 
@@ -23,7 +24,7 @@ def create_app() -> FastAPI:
 
     return app_
 
-
+initialize_database()
 app = create_app()
 
 
