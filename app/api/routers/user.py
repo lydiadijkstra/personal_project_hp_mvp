@@ -19,12 +19,3 @@ user_router.include_router(
     tags=["auth"], # auth/login
     responses={404: {"description": "Not found > app-api-routers-children.py - 2"}},
 )
-
-
-
-"""
-in the login endpoint it says:
-localhost/login
-localhost/auth/login
-
-"""

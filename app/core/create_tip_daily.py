@@ -1,4 +1,7 @@
+# Schedule fetching data
 from apscheduler.schedulers.background import BackgroundScheduler
+
+# import
 from app.core.database import SessionLocal
 from app.models.children import Child
 from app.models.tips import Tip
@@ -22,6 +25,7 @@ def generate_daily_tips():
             print(f"Error generating tip for child {child.id}: {e}")
     db.commit()
     db.close()
+
 
 # Start the scheduler
 scheduler = BackgroundScheduler()

@@ -26,4 +26,3 @@ class User(CommonModel):
 		return f"{self.email}"
 	
 metadata = Base.metadata
-

@@ -1,28 +1,15 @@
-from alembic.command import current
+#fastapi
 from fastapi import HTTPException, status, Depends
 from typing import Annotated
-from datetime import datetime, timedelta, timezone
 
+# sqlalchemy
 from sqlalchemy.orm import Session
-
-# from auth import models, schemas
-from passlib.context import CryptContext
-from jose import JWTError, jwt
 
 # import
 from app.models import user as UserModel
 from app.models import children as ChildModel
-from app.schemas.children import ChildCreate, ChildUpdate#, Token
-from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
-from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
-from app.core.dependencies import get_db, oauth2_scheme
+from app.schemas.children import ChildCreate, ChildUpdate
 from app.api.endpoints.user.functions import get_current_user
-from app.core.gemini_api_datafetcher import get_ai_tip
-from app.models.tips import Tip
-
-#add logging for debugging the problem not getting a print and not creating a tip
-import logging
-logging.basicConfig(level=logging.DEBUG)
 
 
 # Resolve forward references
@@ -32,19 +19,11 @@ ChildUpdate.model_rebuild()
 
 # create new child
 def create_new_child(db: Session, child: ChildCreate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
-    #hashed_password = pwd_context.hash(child.password)
     new_child = ChildModel.Child(
         name=child.name,
         age=child.age,
         user_id=current_user.user_id
     )
-    try:
-        logging.debug("I will create a new child now! / children_functions")
-        ...
-    except Exception as e:
-        logging.debug(f"Error occurred: {e}")
-        raise
-
     db.add(new_child)
     db.commit()
     db.refresh(new_child)
@@ -95,6 +74,4 @@ def delete_child(db: Session, child_id: int, current_user: Annotated[UserModel.U
     db_child = get_child_by_id(db, child_id, current_user)
     db.delete(db_child)
     db.commit()
-    # db.refresh(db_child) # child no longer in the database, so refresh the child is not possible -> internal server error
     return {"msg": f"{db_child.name} deleted successfully"}
-

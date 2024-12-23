@@ -1,13 +1,9 @@
 # fastapi
 from fastapi import FastAPI
-from fastapi.openapi.utils import get_openapi
 
+# import
 from app.core.modules import init_routers, make_middleware
-from app.api.routers.children import child_router
-from fastapi.openapi.docs import get_swagger_ui_html
 from app.core.database import initialize_database
-
-from app.api.endpoints.user.functions import get_current_user
 
 
 def create_app() -> FastAPI:
@@ -17,7 +13,7 @@ def create_app() -> FastAPI:
         version="1.0.0",
         # dependencies=[Depends(Logging)],
         middleware=make_middleware(),
-        #root_path="/" # <------ This root_path fix the problem / 17.12 commenting out fixed 404 not found on all endpoints
+        #root_path="/"
 
     )
     init_routers(app_=app_)

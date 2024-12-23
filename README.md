@@ -1,5 +1,7 @@
-# FastAPI Starter Kit
-A professional FastAPI template
+# HARMONIC PARENT API
+
+This API was created with the FastAPI Starter Kit from Mahmud Jewel.
+A professional FastAPI template.
 <p>
     <a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
         <img src="https://img.shields.io/github/forks/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Fork" />
@@ -12,10 +14,10 @@ A professional FastAPI template
     </a>
 </p>
 <p>
-    If the repo is helpful, please give a star and fork it.
+    If the starter-kit repo is helpful, please give a star and fork it.
 </p>
 <a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
-    Click here to clone/fork the repository
+    Click here to clone/fork the starter-kit repository from Mahmud Jewel
 </a>
 
 <!-- [![Fork](https://img.shields.io/github/forks/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Fork)](https://github.com/MahmudJewel/fastapi-starter-kit/fork)
@@ -166,6 +168,9 @@ Once `pip` has finished downloading the dependencies:
     uvicorn
     python-jose
     alembic
+    google generative ai
+    random
+
 
 For production level project, Please follow this repo https://github.com/MahmudJewel/fastapi-production-kit
 ### Happy Coding

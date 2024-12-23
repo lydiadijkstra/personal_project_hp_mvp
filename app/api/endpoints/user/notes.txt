@@ -10,3 +10,11 @@ return: Token(access_token=access_token, refresh_token=refresh_token, token_type
 * delete by current user
 
 ## maybe add endpoint /change_password for changing password when not logged in
+
+get all users - only admin?
+
+unit testing
+
+create DB connection PG admin
+
+update readme file

@@ -1,7 +1,4 @@
 # fastapi
-from venv import create
-
-from alembic.command import current
 from fastapi import APIRouter, Depends, HTTPException
 
 # sqlalchemy
@@ -15,11 +12,6 @@ from app.api.endpoints.user.functions import get_current_user
 
 
 user_module = APIRouter()
-
-
-# @user_module.get('/')
-# async def read_auth_page():
-#     return {"msg": "Auth page Initialization done"}
 
 
 # create new user 
@@ -68,22 +60,10 @@ async def update_user( user_id: int, user: UserUpdate, db: Session = Depends(get
     print(f"Received data: {user.model_dump()}")
     return user_functions.update_user(db, user_id, user, current_user)
 
-"""
-# update child
-@child_module.patch('/{child_id}', response_model=Child,
-            #   dependencies=[Depends(RoleChecker(['admin']))]
-              )
-async def update_child(child_id: int, child: ChildUpdate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-    print(f"Received data: {child.model_dump()}")
-    return child_functions.update_child(db, child_id, child, current_user)
-"""
 
 # delete user
 @user_module.delete('/{user_id}', 
-            #    response_model=User,
             #    dependencies=[Depends(RoleChecker(['admin']))]
                )
 async def delete_user( user_id: int, db: Session = Depends(get_db)):
     return user_functions.delete_user(db, user_id)
-
-

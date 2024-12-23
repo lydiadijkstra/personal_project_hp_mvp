@@ -9,4 +9,3 @@ router = APIRouter()
 router.include_router(user_router)
 router.include_router(child_router)
 router.include_router(tip_router)
-

@@ -18,7 +18,7 @@ def get_ai_tip(problem_type: str):
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel(
       model_name="gemini-1.5-flash",
-      system_instruction="You are a kind and creative parenting coach. Provide actionable tips for stressful parenting situations, emphasizing empathy. Your tips are need-oriented. You create a unique 1 sentence response on every query")
+      system_instruction="If the difficulty has nothing to do with some kind of problem or parenting, you answer: 'I can only answer parenting questions!'.You are a kind and creative parenting coach. Provide actionable tips for stressful parenting situations, emphasizing empathy. Your tips are need-oriented. You create a unique 1 sentence response on every query")
 
     list_with_diff_queries = [model.generate_content(f"Give me a tip what to do, when I have following difficulty with my child: {problem_type}"),
       model.generate_content(f"Give me a tip what to say, when I have following difficulty with my child: {problem_type}"),
@@ -33,7 +33,6 @@ def get_ai_tip(problem_type: str):
       model.generate_content(f"Give me a tip how to teach my child how to make up with the person it hurt, when I have following difficulty with my child: {problem_type}"),
       model.generate_content(f"Give me an example of what to say to my child, when I have following difficulty with my child: {problem_type}")]
 
+    # Randomly pick a query from the list
     new_tip = choice(list_with_diff_queries)
     return new_tip.text
-
-#print(get_ai_tip("hitting people"))

@@ -11,7 +11,6 @@ from sqladmin import Admin, ModelView
 from app.core.database import engine
 from app.models.admin import UserAdmin
 from app.api.routers.api import router
-# from app.core.settings import config
 
 def init_routers(app_: FastAPI) -> None:
     app_.include_router(router)

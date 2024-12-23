@@ -19,4 +19,4 @@ class Tip(TipBase):
     send_at: datetime
 
     class Config:
-        from_attributes = True  # Ensure compatibility with SQLAlchemy models
+        from_attributes = True

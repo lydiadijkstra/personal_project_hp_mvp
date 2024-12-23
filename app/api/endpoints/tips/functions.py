@@ -1,8 +1,8 @@
-from alembic.command import current
+# fastapi
 from fastapi import HTTPException, status, Depends
 from typing import Annotated
-from datetime import datetime, timedelta, timezone
 
+# sqlalchemy
 from sqlalchemy.orm import Session
 
 # import
@@ -28,11 +28,9 @@ def create_new_tip(db: Session, tip: TipCreate, current_user: UserModel.User, ch
         ).first()
         if not child:
             raise HTTPException(status_code=404, detail="Child not found or not authorized to access")
-
         problem_type = child.difficulty
         tip_content = get_ai_tip(problem_type=problem_type)
     except Exception as e:
-        print(f"Error generating tip: {e}")
         raise HTTPException(status_code=500, detail="Error generating tip")
 
     # create the new tip

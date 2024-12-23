@@ -1,15 +1,13 @@
 """
 File to create tables in the Harmonic-Parent-Database
 """
-
 import psycopg2
 from dotenv import load_dotenv
 import os
-from app.core.database import create_engine, Base
-
 
 
 load_dotenv()
+
 
 # Database connection
 db_params = {
@@ -33,20 +31,6 @@ CREATE TABLE IF NOT EXISTS tips (
     send_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 """
-
-
-#
-# def initialize_database():
-#     """Initialize the database and create all tables."""
-#     engine = create_engine(DATABASE_URL)
-#     # Check if the database exists
-#     if not database_exists(engine.url):
-#         # Create the database if it doesn't exist
-#         create_database(engine.url)
-#         print(f"Database created at {DATABASE_URL}")
-#     # Create tables
-#     Base.metadata.create_all(bind=engine)
-#     print("All tables are created.")
 
 
 try:

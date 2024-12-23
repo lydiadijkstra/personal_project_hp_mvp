@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey, TIMESTAMP
 from sqlalchemy.sql import func
 from app.core.database import Base
 
+
 class Tip(Base):
     __tablename__ = "tips"
 

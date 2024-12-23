@@ -1,9 +1,10 @@
+# fastapi
 from fastapi import HTTPException, status, Depends
 from fastapi import Request
-
 from typing import Annotated
 from datetime import datetime, timedelta, timezone
 
+# SQLAlchemy
 from sqlalchemy.orm import Session
 
 # from auth import models, schemas
@@ -16,7 +17,6 @@ from app.schemas.user import UserCreate, UserUpdate, Token
 from app.core.settings import SECRET_KEY, REFRESH_SECRET_KEY, ALGORITHM
 from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES
 from app.core.dependencies import get_db, oauth2_scheme
-#from app.api.endpoints.user.functions import get_current_user
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
