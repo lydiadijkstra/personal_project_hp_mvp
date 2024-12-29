@@ -1,28 +1,13 @@
 # HARMONIC PARENT API
 
 This API was created with the FastAPI Starter Kit from Mahmud Jewel.
-A professional FastAPI template.
 <p>
-    <a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
-        <img src="https://img.shields.io/github/forks/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Fork" />
-    </a>
-    <a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
-        <img src="https://img.shields.io/github/stars/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Stars" />
-    </a>
-    <a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
-        <img src="https://img.shields.io/nuget/dt/Azylee.Core.svg" />
-    </a>
+    If you like the Harmonic Parent API, please give me a star:
 </p>
-<p>
-    If the starter-kit repo is helpful, please give a star and fork it.
-</p>
-<a href="https://github.com/MahmudJewel/fastapi-starter-kit/fork">
-    Click here to clone/fork the starter-kit repository from Mahmud Jewel
+<a href="https://github.com/lydiadijkstra/personal_project_hp_mvp">
+    Klick here the give a star, clone or fork the repository
 </a>
 
-<!-- [![Fork](https://img.shields.io/github/forks/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Fork)](https://github.com/MahmudJewel/fastapi-starter-kit/fork)
-[![Stars](https://img.shields.io/github/stars/MahmudJewel/fastapi-starter-kit.svg?style=social&label=Stars)](https://github.com/MahmudJewel/fastapi-starter-kit)
-[![NuGet](https://img.shields.io/nuget/dt/Azylee.Core.svg)](https://www.nuget.org/packages/Azylee.Core)   -->
 
 ## Features:
 
@@ -41,10 +26,18 @@ A professional FastAPI template.
 ├── alembic.ini
 ├── app
 │   ├── api
-│   │   ├── endpoints   # Contains modules for each feature (user, product, payments).
+│   │   ├── endpoints   # Contains modules for each feature (user, children, tips).
 │   │   │   ├── __init__.py
 │   │   │   └── user
 │   │   │       ├── auth.py
+│   │   │       ├── functions.py
+│   │   │       ├── __init__.py
+│   │   │       └── user.py
+│   │   │   └── children
+│   │   │       ├── functions.py
+│   │   │       ├── __init__.py
+│   │   │       └── user.py
+│   │   │   └── tips
 │   │   │       ├── functions.py
 │   │   │       ├── __init__.py
 │   │   │       └── user.py
@@ -52,45 +45,54 @@ A professional FastAPI template.
 │   │   └── routers     # Contains FastAPI routers, where each router corresponds to a feature.
 │   │       ├── api.py
 │   │       ├── __init__.py
+│   │       ├── children.py
+│   │       ├── tips.py
 │   │       └── user.py
 │   ├── core    # Contains core functionality like database management, dependencies, etc.
 │   │   ├── database.py
 │   │   ├── dependencies.py
 │   │   ├── __init__.py
+│   │   ├── create_tip_daily.py
+│   │   ├── modules.py
+│   │   ├── gemini_api_datafetcher.py
 │   │   └── settings.py
 │   ├── __init__.py
 │   ├── main.py     # Initializes the FastAPI app and brings together various components.
+│   ├── create_table.py # Pre-Setup for creating a new table in the DB
 │   ├── models      # Contains modules defining database models for users, products, payments, etc.
 │   │   ├── admin.py
 │   │   ├── common.py
+│   │   ├── children.py
+│   │   ├── tips.py
 │   │   ├── __init__.py
 │   │   └── user.py
 │   ├── schemas   # Pydantic model for data validation
 │   │   ├── __init__.py
+│   │   ├── tips.py
+│   │   ├── children.py
 │   │   └── user.py
-│   └── utils       # Can include utility functions that are used across different features.
+│   └── 
 ├── requirements.txt # Lists project dependencies.
+├── README.md
+├── docs
+│   ├── docs.odt
 ```
 
-**app/api/endpoints/**: Contains modules for each feature (user, product, payments).
+**app/api/endpoints/**: Contains modules for each feature (user, children, tips).
 
 **app/api/routers/**: Contains FastAPI routers, where each router corresponds to a feature.
 
-**app/models/**: Contains modules defining database models for users, products, payments, etc.
+**app/models/**: Contains modules defining database models for users, children, tips, etc.
 
 **app/core/**: Contains core functionality like database management, dependencies, etc.
 
-**app/utils/**: Can include utility functions that are used across different features.
+**app/schemas/**: Contains the Class Schemas that are used across different features.
 
 **app/main.py**: Initializes the FastAPI app and brings together various components.
-
-**tests/**: Houses your test cases.
 
 **alembic/**: Manages database migrations.
 
 **docs/**: Holds documentation files.
-
-**scripts/**: Contains utility scripts.
 
 **requirements.txt**: Lists project dependencies.
 
@@ -99,7 +101,6 @@ A professional FastAPI template.
 The first thing to do is to clone the repository:
 
 ```sh
-$ https://github.com/MahmudJewel/fastapi-starter-kit
 ```
 
 Create a virtual environment to install dependencies in and activate it:
@@ -171,6 +172,4 @@ Once `pip` has finished downloading the dependencies:
     google generative ai
     random
 
-
-For production level project, Please follow this repo https://github.com/MahmudJewel/fastapi-production-kit
 ### Happy Coding
