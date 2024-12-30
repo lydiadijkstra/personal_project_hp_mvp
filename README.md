@@ -1,6 +1,6 @@
-# HARMONIC PARENT API
+# Harmonic Parent API  
+The Harmonic Parent API is designed to help parents navigate challenging situations with their children by providing AI-generated daily tips. This tool offers structured guidance for managing common parenting stressors, such as hitting, yelling, or managing time effectively.  
 
-This API was created with the FastAPI Starter Kit from Mahmud Jewel.
 <p>
     If you like the Harmonic Parent API, please give me a star:
 </p>
@@ -11,13 +11,21 @@ This API was created with the FastAPI Starter Kit from Mahmud Jewel.
 
 ## Features:
 
-- FastAPI project structure tree
-- user module
-  - id, first name, last name, **email** as username, **password**, role, is_active created_at, updated_at
-- admin dashboard => sqladmin
-- authentication => JWT
-- db migration => alembic
-- CORS middleware
+## Features  
+- Daily AI-generated parenting tips for common challenges.  
+- Secure user authentication using JWT.  
+- Seamless database migration with Alembic.
+
+
+## Table of Contents  
+- [Features](#features)  
+- [Setup](#setup)  
+- [API Endpoints](#api-endpoints)  
+- [Project Structure](#project-structure)  
+- [Tech Stack](#tech-stack)  
+- [Contributing](#contributing)  
+
+
 
 ## Structured Tree
 
@@ -96,19 +104,24 @@ This API was created with the FastAPI Starter Kit from Mahmud Jewel.
 
 **requirements.txt**: Lists project dependencies.
 
-# Setup
 
-The first thing to do is to clone the repository:
+
+## Setup  
+Follow these steps to set up the project locally:  
+
+1. Clone the repository:  
 
 ```sh
+   ```bash  
+$ git clone https://github.com/username/harmonic-parent.git
+$ cd personal_project_mvp 
 ```
 
 Create a virtual environment to install dependencies in and activate it:
 
 ```sh
-$ cd fastapi-starter-kit
-$ python -m venv venv
-$ source venv/bin/activate
+$ python -m venv venv  
+$ source venv/bin/activate  
 ```
 
 Then install the dependencies:
@@ -116,9 +129,6 @@ Then install the dependencies:
 ```sh
 # for fixed version
 (venv)$ pip install -r requirements.txt
-
-# or for updated version
-(venv)$ pip install -r dev.txt
 ```
 
 Note the `(venv)` in front of the prompt. This indicates that this terminal
@@ -126,13 +136,18 @@ session operates in a virtual environment set up by `virtualenv2`.
 
 Once `pip` has finished downloading the dependencies:
 
-```sh
-# db migrations
-(venv)$ alembic upgrade head
+Run Database Migrations:
 
-# start the server
+```sh
+(venv)$ alembic upgrade head
+```
+
+Start the server:
+
+```sh
 (venv)$ uvicorn app.main:app --reload
 ```
+
 
 ## User module's API
 
@@ -173,3 +188,7 @@ Once `pip` has finished downloading the dependencies:
     random
 
 ### Happy Coding
+
+
+>> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
+
