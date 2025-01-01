@@ -1,5 +1,5 @@
 # Harmonic Parent API  
-The Harmonic Parent API is designed to help parents navigate challenging situations with their children by providing AI-generated daily tips. This tool offers structured guidance for managing common parenting stressors, such as hitting, yelling, or managing time effectively.  
+The Harmonic Parent API is designed to help parents navigate challenging situations with their children by providing AI-generated daily tips. This tool offers structured guidance for managing common parenting stressors, such as hitting, yelling, or managing time effectively.
 
 <p>
     If you like the Harmonic Parent API, please give me a star:
@@ -12,9 +12,9 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
 ## Features:
 
 ## Features  
-- Daily AI-generated parenting tips for common challenges.  
-- Secure user authentication using JWT.  
-- Seamless database migration with Alembic.
+- Daily AI-generated parenting tips for common challenges  
+- Secure user authentication using JWT  
+- Seamless database migration with Alembic
 
 
 ## Table of Contents  
@@ -30,80 +30,19 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
 ## Structured Tree
 
 ```sh
-├── alembic     # Manages database migrations
-├── alembic.ini
+├── alembic               # Manages database migrations
 ├── app
 │   ├── api
-│   │   ├── endpoints   # Contains modules for each feature (user, children, tips).
-│   │   │   ├── __init__.py
+│   │   ├── endpoints     # Contains modules for each feature (user, children, tips).
 │   │   │   └── user
-│   │   │       ├── auth.py
-│   │   │       ├── functions.py
-│   │   │       ├── __init__.py
-│   │   │       └── user.py
 │   │   │   └── children
-│   │   │       ├── functions.py
-│   │   │       ├── __init__.py
-│   │   │       └── user.py
 │   │   │   └── tips
-│   │   │       ├── functions.py
-│   │   │       ├── __init__.py
-│   │   │       └── user.py
-│   │   ├── __init__.py
-│   │   └── routers     # Contains FastAPI routers, where each router corresponds to a feature.
-│   │       ├── api.py
-│   │       ├── __init__.py
-│   │       ├── children.py
-│   │       ├── tips.py
-│   │       └── user.py
-│   ├── core    # Contains core functionality like database management, dependencies, etc.
-│   │   ├── database.py
-│   │   ├── dependencies.py
-│   │   ├── __init__.py
-│   │   ├── create_tip_daily.py
-│   │   ├── modules.py
-│   │   ├── gemini_api_datafetcher.py
-│   │   └── settings.py
-│   ├── __init__.py
-│   ├── main.py     # Initializes the FastAPI app and brings together various components.
-│   ├── create_table.py # Pre-Setup for creating a new table in the DB
-│   ├── models      # Contains modules defining database models for users, products, payments, etc.
-│   │   ├── admin.py
-│   │   ├── common.py
-│   │   ├── children.py
-│   │   ├── tips.py
-│   │   ├── __init__.py
-│   │   └── user.py
-│   ├── schemas   # Pydantic model for data validation
-│   │   ├── __init__.py
-│   │   ├── tips.py
-│   │   ├── children.py
-│   │   └── user.py
-│   └── 
-├── requirements.txt # Lists project dependencies.
-├── README.md
-├── docs
-│   ├── docs.odt
+│   │   └── routers       # Contains FastAPI routers, where each router corresponds to a feature.
+│   ├── core              # Contains core functionality like database management, dependencies, etc.
+│   ├── main.py           # Initializes the FastAPI app and brings together various components.
+│   ├── models            # Contains modules defining database models for users, products, payments, etc.
+│   ├── schemas           # Pydantic model for data validation
 ```
-
-**app/api/endpoints/**: Contains modules for each feature (user, children, tips).
-
-**app/api/routers/**: Contains FastAPI routers, where each router corresponds to a feature.
-
-**app/models/**: Contains modules defining database models for users, children, tips, etc.
-
-**app/core/**: Contains core functionality like database management, dependencies, etc.
-
-**app/schemas/**: Contains the Class Schemas that are used across different features.
-
-**app/main.py**: Initializes the FastAPI app and brings together various components.
-
-**alembic/**: Manages database migrations.
-
-**docs/**: Holds documentation files.
-
-**requirements.txt**: Lists project dependencies.
-
 
 
 ## Setup  
@@ -131,11 +70,6 @@ Then install the dependencies:
 (venv)$ pip install -r requirements.txt
 ```
 
-Note the `(venv)` in front of the prompt. This indicates that this terminal
-session operates in a virtual environment set up by `virtualenv2`.
-
-Once `pip` has finished downloading the dependencies:
-
 Run Database Migrations:
 
 ```sh
@@ -149,20 +83,19 @@ Start the server:
 ```
 
 
-## User module's API
+## Major Endpoints
 
-| SRL | METHOD   | ROUTE              | FUNCTIONALITY                  | Fields                                                                                |
-| --- | -------- | ------------------ | ------------------------------ | ------------------------------------------------------------------------------------- |
-| _1_ | _POST_   | `/login`           | _Login user_                   | _**email**, **password**_                                                             |
-| _2_ | _POST_   | `/refresh/?refresh_token=`           | _Refresh access token_|_None_ 
-| _3_ | _POST_   | `/users/`          | _Create new user_              | _**email**, **password**, first name, last name_                                      |
-| _4_ | _GET_    | `/users/`          | _Get all users list_           | _email, password, first name, last name, role, is_active, created_at, updated_at, id_ |
-| _5_ | _GET_    | `/users/me/`       | _Get current user details_     | _email, password, first name, last name, role, is_active, created_at, updated_at, id_ |
-| _6_ | _GET_    | `/users/{user_id}` | _Get indivisual users details_ | _email, password, first name, last name, role, is_active, created_at, updated_at, id_ |
-| _7_ | _PATCH_  | `/users/{user_id}` | _Update the user partially_    | _email, password, is_active, role_                                                    |
-| _8_ | _DELETE_ | `/users/{user_id}` | _Delete the user_              | _None_                                                                                |
-| _9_ | _GET_    | `/`                | _Home page_                    | _None_                                                                                |
-| _10_ | _GET_    | `/admin`           | _Admin Dashboard_              | _None_                                                                                |
+| METHOD   | ROUTE              | FUNCTIONALITY                  | Fields                                                                                |
+| -------- | ------------------ | ------------------------------ | ------------------------------------------------------------------------------------- |
+| _POST_   | `/login`           | _Login user_                   | _**email**, **password**_                                                             |
+| _POST_   | `/users/`          | _Create new user_              | _**email**, **password**, name, username, location_                                      |
+| _GET_    | `/users/`          | _Get all users list_           | _email, hashed_password, name, username, location, role, is_active, created_at, id_ |
+| _PATCH_  | `/users/{user_id}` | _Update the user partially_    | _email, password, name, username, location, role_                                                    |
+| _DELETE_ | `/users/{user_id}` | _Delete the user_              | _None_                                                                                |
+| _POST_   | `/children/`       | _Create new child_             | _**name**, **issue**, birth date_                                      |
+| _POST_   | `/tips/`           | _Create new tip for issue_     | _**name**, **issue**, birth date_                                      |
+| _GET_    | `/`                | FastAPI Docs (a.k.a Swagger)_  | _None_                                                                                |
+| _GET_    | `/admin`           | _Admin Dashboard_              | _None_                                                                                |
 
 # Tools
 
@@ -190,5 +123,10 @@ Start the server:
 ### Happy Coding
 
 
->> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
+<p>
+    >> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
+</p>
+<a href="[https://github.com/lydiadijkstra/personal_project_hp_mvp](https://github.com/MahmudJewel/fastapi-starter-boilerplate)">
+    Klick here to create your own API with Mehmud's Starter Kit
+</a>
 
