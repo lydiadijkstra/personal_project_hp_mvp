@@ -126,7 +126,6 @@ Start the server:
 <p>
     >> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
 </p>
-<a href="[https://github.com/lydiadijkstra/personal_project_hp_mvp](https://github.com/MahmudJewel/fastapi-starter-boilerplate)">
+<a href="https://github.com/MahmudJewel/fastapi-starter-boilerplate">
     Klick here to create your own API with Mehmud's Starter Kit
 </a>
-
