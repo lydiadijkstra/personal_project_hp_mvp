@@ -9,7 +9,7 @@ from app.core.database import initialize_database
 def create_app() -> FastAPI:
     app_ = FastAPI(
         title="HarmonicParent",
-        description="Parenting API for supporting parents in times where bringing up gets hard. Created with a fork of the FastAPI starter kit repo, developed with 💗 by mahmud.",
+        description="Parenting API for supporting parents in times where bringing up gets hard. Developed with 💗 by Lydia.",
         version="1.0.0",
         # dependencies=[Depends(Logging)],
         middleware=make_middleware(),

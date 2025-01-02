@@ -5,7 +5,7 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
     If you like the Harmonic Parent API, please give me a star:
 </p>
 <a href="https://github.com/lydiadijkstra/personal_project_hp_mvp">
-    Klick here the give a star, clone or fork the repository
+    Klick here to give a star, clone or fork the repository
 </a>
 
 
