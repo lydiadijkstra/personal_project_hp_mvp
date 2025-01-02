@@ -9,7 +9,21 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
 </a>
 
 
-## Features:
+## Harmonic Parent API Links
+<p>
+    This API is deployed on Render
+</p>
+<a href="https://harmonic-parent.onrender.com/docs">
+    Klick here to have a look at the docs (aka swagger) 
+</a>
+<p>
+    This API is deployed on Render
+</p>
+<a href="https://dbdiagram.io/d/672fd596e9daa85acae5128a">
+    Klick here to have a look at the diagram 
+</a>
+
+
 
 ## Features  
 - Daily AI-generated parenting tips for common challenges  
@@ -97,21 +111,10 @@ Start the server:
 | _GET_    | `/`                | FastAPI Docs (a.k.a Swagger)_  | _None_                                                                                |
 | _GET_    | `/admin`           | _Admin Dashboard_              | _None_                                                                                |
 
-# Tools
-
-### Back-end
-
-#### Language:
-
+# Technologies used
     Python
-
-#### Frameworks:
-
     FastAPI
     pydantic
-
-#### Other libraries / tools:
-
     SQLAlchemy
     starlette
     uvicorn
@@ -127,5 +130,5 @@ Start the server:
     >> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
 </p>
 <a href="https://github.com/MahmudJewel/fastapi-starter-boilerplate">
-    Klick here to create your own API with Mehmud's Starter Kit
+    Klick here to create your own API with Mahmud's Starter Kit
 </a>
