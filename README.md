@@ -13,14 +13,20 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
 <p>
     This API is deployed on Render
 </p>
-<a href="https://harmonic-parent.onrender.com/docs">
+<a href="https://harmonic-parent.onrender.com">
     Klick here to have a look at the docs (aka swagger) 
 </a>
 <p>
-    This API is deployed on Render
+    The Database is also deployed on Render
 </p>
 <a href="https://dbdiagram.io/d/672fd596e9daa85acae5128a">
     Klick here to have a look at the diagram 
+</a>
+<p>
+    The Python Backend code is hosted on GitHub
+</p>
+<a href="https://github.com/lydiadijkstra/personal_project_hp_mvp">
+    Klick here to have a look at the code 
 </a>
 
 
