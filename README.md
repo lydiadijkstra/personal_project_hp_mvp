@@ -5,7 +5,7 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
     If you like the Harmonic Parent API, please give me a star:
 </p>
 <a href="https://github.com/lydiadijkstra/personal_project_hp_mvp">
-    Klick here to give a star, clone or fork the repository
+    Click here to give a star, clone or fork the repository
 </a>
 
 
@@ -14,19 +14,19 @@ The Harmonic Parent API is designed to help parents navigate challenging situati
     This API is deployed on Render
 </p>
 <a href="https://harmonic-parent.onrender.com">
-    Klick here to have a look at the docs (aka swagger) 
+    Click here to have a look at the docs (aka swagger) 
 </a>
 <p>
     The Database is also deployed on Render
 </p>
 <a href="https://dbdiagram.io/d/672fd596e9daa85acae5128a">
-    Klick here to have a look at the diagram 
+    Click here to have a look at the diagram 
 </a>
 <p>
     The Python Backend code is hosted on GitHub
 </p>
 <a href="https://github.com/lydiadijkstra/personal_project_hp_mvp">
-    Klick here to have a look at the code 
+    Click here to have a look at the code 
 </a>
 
 
@@ -136,5 +136,5 @@ Start the server:
     >> This API was created with the FastAPI Starter Kit from Mahmud Jewel. <<
 </p>
 <a href="https://github.com/MahmudJewel/fastapi-starter-boilerplate">
-    Klick here to create your own API with Mahmud's Starter Kit
+    Click here to create your own API with Mahmud's Starter Kit
 </a>
