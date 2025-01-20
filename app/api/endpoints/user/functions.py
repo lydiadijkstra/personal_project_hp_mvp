@@ -72,7 +72,6 @@ def read_all_user(db: Session, skip: int, limit: int):
 
 
 # update user
-## maybe add endpoint /change_password for changing password when not logged in
 def update_user(db: Session, user_id: int, user: UserUpdate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):
     db_user = get_user_by_id(db, user_id)
     if not db_user:

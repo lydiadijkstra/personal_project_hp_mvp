@@ -9,18 +9,17 @@ import os
 
 load_dotenv()
 
-"""
+# DB Data for localhost
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
-"""
+
 
 DATABASE_URL = os.getenv("DATABASE_URL") # Call DB from env for deployment at render
 
 
-#SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"
 #SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}" # DB  localhost
 SQLALCHEMY_DATABASE_URL = f"{DATABASE_URL}" # DB deployed on Render
 
