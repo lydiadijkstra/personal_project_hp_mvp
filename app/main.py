@@ -34,17 +34,4 @@ initialize_database()
 app = create_app()
 
 
-"""
-install requirements, run command in terminal:
-pip install -r requirements.txt
 
-# or for updated version
-pip install -r dev.txt
-
-command to run the app:
-uvicorn app.main:app --reload
-
-to run the app locally go to app/core/database:
-change the database settings from render to local
-
-"""
