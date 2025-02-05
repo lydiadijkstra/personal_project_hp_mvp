@@ -60,5 +60,8 @@ class Test(unittest.TestCase):
         self.assertIsNotNone(test_user_data)
 
 
+# class TestUserRegistration(BaseTestCase)
+
+
 if __name__ == "__main__":
     unittest.main()
