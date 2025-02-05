@@ -13,10 +13,8 @@ def create_app() -> FastAPI:
         title="HarmonicParent",
         description="Parenting API for supporting parents in times where bringing up gets hard. Developed with 💗 by Lydia.",
         version="1.0.0",
-        # dependencies=[Depends(Logging)],
         middleware=make_middleware(),
         root_path=""
-
     )
 
     @app_.get("/", include_in_schema=False)
@@ -27,8 +25,6 @@ def create_app() -> FastAPI:
 
     return app_
 
-
-#@app.get("/")async def root_redirect(): return RedirectResponse(url="/docs")
 
 initialize_database()
 app = create_app()

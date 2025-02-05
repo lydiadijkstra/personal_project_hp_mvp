@@ -50,33 +50,25 @@ async def read_all_children(skip: int = 0, limit: int = 100,  db: Session = Depe
 
 
 # get child by id
-@child_module.get('/{child_id}', response_model=Child,
-            # dependencies=[Depends(RoleChecker(['admin']))]
-            )
+@child_module.get('/{child_id}', response_model=Child)
 async def read_child_by_id(child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.get_child_by_id(db, child_id, current_user)
 
 
 # get child by name
-@child_module.get('/name/{name}', response_model=Child,
-            # dependencies=[Depends(RoleChecker(['admin']))]
-            )
+@child_module.get('/name/{name}', response_model=Child)
 async def read_child_by_name(name: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.get_child_by_name(db, name, current_user)
 
 
 # update child
-@child_module.patch('/{child_id}', response_model=Child,
-            #   dependencies=[Depends(RoleChecker(['admin']))]
-              )
+@child_module.patch('/{child_id}', response_model=Child)
 async def update_child(child_id: int, child: ChildUpdate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     print(f"Received data: {child.model_dump()}")
     return child_functions.update_child(db, child_id, child, current_user)
 
 
 # delete child
-@child_module.delete('/{child_id}',
-            #    dependencies=[Depends(RoleChecker(['admin']))]
-               )
+@child_module.delete('/{child_id}')
 async def delete_child( child_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return child_functions.delete_child(db, child_id, current_user)

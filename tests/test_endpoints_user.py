@@ -39,8 +39,7 @@ class Test(unittest.TestCase):
 
         self.assertIsNotNone(self.default_user_data)
         self.assertEqual(self.default_user_data, self.default_user_data)
-        #self.db.add.assert_called()
-        #self.db.commit.assert_called()
+
 
 
 #def update_user(db: Session, user_id: int, user: UserUpdate, current_user: Annotated[UserModel.User, Depends(get_current_user)]):

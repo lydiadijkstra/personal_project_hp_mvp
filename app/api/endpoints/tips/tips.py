@@ -22,9 +22,7 @@ async def read_all_tips(skip: int = 0, limit: int = 100,  db: Session = Depends(
 
 
 # get tip by id
-@tip_module.get('/{tip_id}', response_model=Tip,
-            # dependencies=[Depends(RoleChecker(['admin']))]
-            )
+@tip_module.get('/{tip_id}', response_model=Tip)
 async def read_tip_by_id(tip_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return tip_functions.get_tip_by_id(db, tip_id, current_user)
 
